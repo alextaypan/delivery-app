@@ -3,8 +3,14 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { City, Country } from "country-state-city";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useState } from "react";
+import s from "./Form.module.scss";
 
 const DeliveryForm = () => {
+  const [startDate, setStartDate] = useState(new Date());
+
   const cities = City.getAllCities();
   const countries = Country.getAllCountries();
 
@@ -12,74 +18,63 @@ const DeliveryForm = () => {
   // console.log(countries);
   return (
     <Form>
-      <Form.Label>sff</Form.Label>
-      <Form.Select aria-label="Select goods">
-        <option>Choose goods...</option>
-        <option value="1">gadgets</option>
-        <option value="2">drinks</option>
-        <option value="3">clothes</option>
-        <option value="4">medicines</option>
-        <option value="5">other</option>
-      </Form.Select>
-
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridCity">
-          <Form.Label>City from</Form.Label>
-          <Form.Control />
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formGridState">
-          <Form.Label>Country</Form.Label>
-          <Form.Select defaultValue="Choose...">
+        <Form.Group as={Col} controlId="formGridGoods">
+          <Form.Label>Goods to deliver</Form.Label>
+          <Form.Select aria-label="Select goods">
             <option>Choose...</option>
-            {countries.map(({ name }) => (
-              <option>{name}</option>
-            ))}
+            <option value="1">gadgets</option>
+            <option value="2">drinks</option>
+            <option value="3">clothes</option>
+            <option value="4">medicines</option>
+            <option value="5">other</option>
           </Form.Select>
         </Form.Group>
       </Row>
 
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridCity">
-          <Form.Label>City to</Form.Label>
+          <Form.Label>City of dispatch</Form.Label>
+          <Form.Control />
+        </Form.Group>
+      </Row>
+
+      <Row className="mb-3">
+        <Form.Group as={Col} controlId="formGridCity">
+          <Form.Label>City</Form.Label>
           <Form.Control />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridState">
-          <Form.Label>Country</Form.Label>
+        <Form.Group as={Col} controlId="formGridCountry">
+          <Form.Label>Destination Country</Form.Label>
           <Form.Select defaultValue="Choose...">
             <option>Choose...</option>
             {countries.map(({ name }) => (
               <option>{name}</option>
             ))}
           </Form.Select>
-        </Form.Group>
-      </Row>
-
-      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formGridPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
         </Form.Group>
       </Row>
 
       <Form.Group className="mb-3" controlId="formGridAddress1">
-        <Form.Label>Address</Form.Label>
-        <Form.Control placeholder="1234 Main St" />
+        <Form.Label>Date of dispatch</Form.Label>
+        <DatePicker
+          selected={startDate}
+          isClearable
+          placeholderText="Please, select a day"
+          clearButtonClassName={s.clearButton}
+          onChange={(date) => setStartDate(date)}
+          minDate={new Date()}
+        />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formGridAddress2">
-        <Form.Label>Address 2</Form.Label>
-        <Form.Control placeholder="Apartment, studio, or floor" />
+      <Form.Group className="mb-3" controlId="Parcel description">
+        <Form.Label>Parcel description</Form.Label>
+        <Form.Control as="textarea" rows={3} />
       </Form.Group>
 
       <Button variant="warning" type="submit">
-        Submit
+        SUBMIT
       </Button>
     </Form>
   );
