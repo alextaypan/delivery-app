@@ -4,15 +4,24 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { City, Country } from "country-state-city";
 
-const cities = City.getAllCities();
-const countries = Country.getAllCountries();
-
-console.log(cities);
-console.log(countries);
-
 const DeliveryForm = () => {
+  const cities = City.getAllCities();
+  const countries = Country.getAllCountries();
+
+  // console.log(cities);
+  // console.log(countries);
   return (
     <Form>
+      <Form.Label>sff</Form.Label>
+      <Form.Select aria-label="Select goods">
+        <option>Choose goods...</option>
+        <option value="1">gadgets</option>
+        <option value="2">drinks</option>
+        <option value="3">clothes</option>
+        <option value="4">medicines</option>
+        <option value="5">other</option>
+      </Form.Select>
+
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridCity">
           <Form.Label>City from</Form.Label>
