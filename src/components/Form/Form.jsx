@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -5,13 +6,13 @@ import Row from "react-bootstrap/Row";
 import { City, Country } from "country-state-city";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useState } from "react";
+import { nanoid } from "nanoid";
 import s from "./Form.module.scss";
 
 const DeliveryForm = () => {
   const [startDate, setStartDate] = useState(new Date());
 
-  const cities = City.getAllCities();
+  // const cities = City.getAllCities();
   const countries = Country.getAllCountries();
 
   // console.log(cities);
@@ -50,7 +51,7 @@ const DeliveryForm = () => {
           <Form.Select defaultValue="Choose...">
             <option>Choose...</option>
             {countries.map(({ name }) => (
-              <option>{name}</option>
+              <option key={nanoid()}>{name}</option>
             ))}
           </Form.Select>
         </Form.Group>
