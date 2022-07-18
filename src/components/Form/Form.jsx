@@ -73,7 +73,7 @@ const DeliveryForm = () => {
         <Form.Control as="textarea" rows={3} />
       </Form.Group>
 
-      <Button variant="warning" type="submit">
+      <Button variant="outline-warning" type="submit">
         SUBMIT
       </Button>
     </Form>
