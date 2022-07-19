@@ -26,7 +26,7 @@ const RequestItem = ({
         </p>
         <p className={s.titleDescr}>
           <span className={s.title}> Date of dispatch: </span>
-          {startDate.toString().slice(0, 24)}
+          {startDate.toString().slice(0, 15)}
         </p>
         <p className={s.titleDescr}>
           <span className={s.title}>Parcel description: </span> {description}
