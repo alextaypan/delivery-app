@@ -14,7 +14,6 @@ const DeliveryForm = ({ onSubmit }) => {
   const [dispatchCity, setDispatchCity] = useState("");
   const [destinationCity, setDestinationCity] = useState("");
   const [description, setDescription] = useState("");
-  const [validated, setValidated] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,12 +40,6 @@ const DeliveryForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = e.target;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-    }
-    setValidated(true);
-
     onSubmit({
       goods,
       dispatchCity,
@@ -54,10 +47,18 @@ const DeliveryForm = ({ onSubmit }) => {
       startDate,
       description,
     });
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setGoods("");
+    setDispatchCity("");
+    setDestinationCity("");
+    setDescription("");
   };
 
   return (
-    <Form noValidate validated={validated} onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <Row className="mb-3">
         <Form.Group as={Col}>
           <Form.Label>Goods to deliver</Form.Label>
@@ -87,9 +88,6 @@ const DeliveryForm = ({ onSubmit }) => {
             value={dispatchCity}
             onChange={handleChange}
           />
-          <Form.Control.Feedback type="invalid">
-            Please provide a valid city.
-          </Form.Control.Feedback>
         </Form.Group>
       </Row>
 
@@ -103,9 +101,6 @@ const DeliveryForm = ({ onSubmit }) => {
             value={destinationCity}
             onChange={handleChange}
           />
-          <Form.Control.Feedback type="invalid">
-            Please provide a valid city.
-          </Form.Control.Feedback>
         </Form.Group>
       </Row>
 
@@ -135,19 +130,12 @@ const DeliveryForm = ({ onSubmit }) => {
         />
       </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Check
-          required
-          label="Agree to terms and conditions"
-          feedback="You must agree before submitting."
-          feedbackType="invalid"
-        />
-      </Form.Group>
-
       <Button
+        className={s.buttonSubmit}
         disabled={!(destinationCity && dispatchCity && goods && startDate)}
         variant="outline-warning"
         type="submit"
+        size="lg"
       >
         SUBMIT
       </Button>
