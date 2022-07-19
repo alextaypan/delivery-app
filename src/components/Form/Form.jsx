@@ -14,6 +14,7 @@ const DeliveryForm = ({ onSubmit }) => {
   const [dispatchCity, setDispatchCity] = useState("");
   const [destinationCity, setDestinationCity] = useState("");
   const [description, setDescription] = useState("");
+  const [validated, setValidated] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,6 +41,12 @@ const DeliveryForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const form = e.target;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+    }
+    setValidated(true);
+
     onSubmit({
       goods,
       dispatchCity,
@@ -47,20 +54,12 @@ const DeliveryForm = ({ onSubmit }) => {
       startDate,
       description,
     });
-    formReset();
-  };
-
-  const formReset = () => {
-    setGoods("");
-    setDispatchCity("");
-    setDestinationCity("");
-    setDescription("");
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridGoods">
+        <Form.Group as={Col}>
           <Form.Label>Goods to deliver</Form.Label>
           <Form.Select
             name="goods"
@@ -79,28 +78,38 @@ const DeliveryForm = ({ onSubmit }) => {
       </Row>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridCity">
+        <Form.Group as={Col}>
           <Form.Label>City of dispatch</Form.Label>
           <Form.Control
+            required
+            placeholder="Enter a city name..."
             name="dispatchCity"
             value={dispatchCity}
             onChange={handleChange}
           />
+          <Form.Control.Feedback type="invalid">
+            Please provide a valid city.
+          </Form.Control.Feedback>
         </Form.Group>
       </Row>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridCity">
+        <Form.Group as={Col}>
           <Form.Label>Destination city</Form.Label>
           <Form.Control
+            required
+            placeholder="Enter a city name..."
             name="destinationCity"
             value={destinationCity}
             onChange={handleChange}
           />
+          <Form.Control.Feedback type="invalid">
+            Please provide a valid city.
+          </Form.Control.Feedback>
         </Form.Group>
       </Row>
 
-      <Form.Group className="mb-3" controlId="formGridAddress1">
+      <Form.Group className="mb-3">
         <Form.Label>Date of dispatch</Form.Label>
         <DatePicker
           name="startDate"
@@ -114,9 +123,10 @@ const DeliveryForm = ({ onSubmit }) => {
         />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="Parcel description">
+      <Form.Group className="mb-4">
         <Form.Label>Parcel description</Form.Label>
         <Form.Control
+          placeholder="Add some description..."
           name="description"
           value={description}
           onChange={handleChange}
@@ -125,7 +135,20 @@ const DeliveryForm = ({ onSubmit }) => {
         />
       </Form.Group>
 
-      <Button variant="outline-warning" type="submit">
+      <Form.Group className="mb-3">
+        <Form.Check
+          required
+          label="Agree to terms and conditions"
+          feedback="You must agree before submitting."
+          feedbackType="invalid"
+        />
+      </Form.Group>
+
+      <Button
+        disabled={!(destinationCity && dispatchCity && goods && startDate)}
+        variant="outline-warning"
+        type="submit"
+      >
         SUBMIT
       </Button>
     </Form>
