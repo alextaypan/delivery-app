@@ -6,10 +6,10 @@ html {
   overflow-x: hidden;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
+* {
+  &:before &:after {
+    box-sizing: inherit;
+  }
 }
 
 body {

@@ -3,20 +3,58 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import { Country } from "country-state-city";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { nanoid } from "nanoid";
 import s from "./Form.module.scss";
+import PropTypes from "prop-types";
 
-const DeliveryForm = () => {
+const DeliveryForm = ({ onSubmit }) => {
   const [startDate, setStartDate] = useState(new Date());
+  const [goods, setGoods] = useState("");
+  const [dispatchCity, setDispatchCity] = useState("");
+  const [destinationCity, setDestinationCity] = useState("");
+  const [description, setDescription] = useState("");
 
-  // const cities = City.getAllCities();
-  const countries = Country.getAllCountries();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case "goods":
+        setGoods(value);
+        break;
+      case "dispatchCity":
+        setDispatchCity(value);
+        break;
+      case "destinationCity":
+        setDestinationCity(value);
+        break;
+      case "startDate":
+        setStartDate(value);
+        break;
+      case "description":
+        setDescription(value);
+        break;
+      default:
+        return;
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    onSubmit({
+      goods,
+      dispatchCity,
+      destinationCity,
+      startDate,
+      description,
+    });
+    formReset();
+  };
+
+  const formReset = () => {
+    setGoods("");
+    setDispatchCity("");
+    setDestinationCity("");
+    setDescription("");
   };
 
   return (
@@ -24,13 +62,18 @@ const DeliveryForm = () => {
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridGoods">
           <Form.Label>Goods to deliver</Form.Label>
-          <Form.Select aria-label="Select goods">
+          <Form.Select
+            name="goods"
+            value={goods}
+            aria-label="Select goods"
+            onChange={handleChange}
+          >
             <option>Choose...</option>
-            <option value="1">gadgets</option>
-            <option value="2">drinks</option>
-            <option value="3">clothes</option>
-            <option value="4">medicines</option>
-            <option value="5">other</option>
+            <option value="gadgets">gadgets</option>
+            <option value="drinks">drinks</option>
+            <option value="clothes">clothes</option>
+            <option value="medicines">medicines</option>
+            <option value="other">other</option>
           </Form.Select>
         </Form.Group>
       </Row>
@@ -38,30 +81,30 @@ const DeliveryForm = () => {
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridCity">
           <Form.Label>City of dispatch</Form.Label>
-          <Form.Control />
+          <Form.Control
+            name="dispatchCity"
+            value={dispatchCity}
+            onChange={handleChange}
+          />
         </Form.Group>
       </Row>
 
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridCity">
-          <Form.Label>City</Form.Label>
-          <Form.Control />
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formGridCountry">
-          <Form.Label>Destination Country</Form.Label>
-          <Form.Select defaultValue="Choose...">
-            <option>Choose...</option>
-            {countries.map(({ name }) => (
-              <option key={nanoid()}>{name}</option>
-            ))}
-          </Form.Select>
+          <Form.Label>Destination city</Form.Label>
+          <Form.Control
+            name="destinationCity"
+            value={destinationCity}
+            onChange={handleChange}
+          />
         </Form.Group>
       </Row>
 
       <Form.Group className="mb-3" controlId="formGridAddress1">
         <Form.Label>Date of dispatch</Form.Label>
         <DatePicker
+          name="startDate"
+          value={startDate}
           selected={startDate}
           isClearable
           placeholderText="Please, select a day"
@@ -73,7 +116,13 @@ const DeliveryForm = () => {
 
       <Form.Group className="mb-3" controlId="Parcel description">
         <Form.Label>Parcel description</Form.Label>
-        <Form.Control as="textarea" rows={3} />
+        <Form.Control
+          name="description"
+          value={description}
+          onChange={handleChange}
+          as="textarea"
+          rows={3}
+        />
       </Form.Group>
 
       <Button variant="outline-warning" type="submit">
@@ -84,3 +133,7 @@ const DeliveryForm = () => {
 };
 
 export default DeliveryForm;
+
+DeliveryForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
