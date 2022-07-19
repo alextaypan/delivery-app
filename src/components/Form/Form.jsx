@@ -107,6 +107,7 @@ const DeliveryForm = ({ onSubmit }) => {
       <Form.Group className="mb-3">
         <Form.Label>Date of dispatch</Form.Label>
         <DatePicker
+          dateFormat="Pp"
           name="startDate"
           value={startDate}
           selected={startDate}

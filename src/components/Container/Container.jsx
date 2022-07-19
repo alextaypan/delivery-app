@@ -30,8 +30,10 @@ const Container = ({ children, requests, onClick }) => {
   );
 };
 
+export default Container;
+
 Container.propTypes = {
   children: PropTypes.node.isRequired,
+  requests: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
-
-export default Container;
