@@ -16,12 +16,6 @@ const App = () => {
     startDate,
     description,
   }) => {
-    // const findName = contacts.find(
-    //   (contact) => contact.name.toLowerCase() === name.toLowerCase()
-    // );
-    // if (findName) {
-    //   return alert(`${name} is already in contacts.`);
-    // }
     setDeliveryInfo((deliveryInfo) => [
       ...deliveryInfo,
       {
@@ -35,14 +29,25 @@ const App = () => {
     ]);
   };
 
+  const getRequests = () => {
+    return deliveryInfo.filter((infoItem) =>
+      infoItem.dispatchCity.toLowerCase()
+    );
+  };
+
+  const removeRequest = (id) => {
+    setDeliveryInfo((prev) => prev.filter((infoItem) => infoItem.id !== id));
+  };
+
   useEffect(() => {
     localStorage.setItem("deliveryInfo", JSON.stringify(deliveryInfo));
   }, [deliveryInfo]);
 
   return (
     <>
-      <Container>
+      <Container requests={getRequests()} onClick={removeRequest}>
         <ToastContainer position="top-right" autoClose={2000} theme="dark" />
+
         <DeliveryForm onSubmit={addDeliveryInfo} />
       </Container>
     </>
