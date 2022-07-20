@@ -1,8 +1,7 @@
 {
   "name": "delivery-app",
   "version": "0.1.0",
-  "private": false,
-  "homepage": "https://github.com/alextaypan/delivery-app",
+  "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -25,7 +24,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "netlify deploy -p"
   },
   "eslintConfig": {
     "extends": [
@@ -45,7 +44,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "gh-pages": "^4.0.0"
-  }
+  "devDependencies": {}
 }
