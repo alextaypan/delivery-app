@@ -1,8 +1,10 @@
 import { nanoid } from "nanoid";
 import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Container from "./components/Container/Container";
 import DeliveryForm from "./components/Form/Form";
+import { toast } from "react-toastify";
 
 const App = () => {
   const [deliveryInfo, setDeliveryInfo] = useState(
@@ -27,6 +29,14 @@ const App = () => {
         description,
       },
     ]);
+    if (deliveryInfo) {
+      return toast.warn(
+        "New delivery request was successfully added, you can check it by pressing the button 'My Requests'",
+        {
+          icon: "🚀",
+        }
+      );
+    }
   };
 
   const getRequests = () => {
@@ -45,9 +55,13 @@ const App = () => {
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        theme="colored"
+        icon={false}
+      />
       <Container requests={getRequests()} onClick={removeRequest}>
-        <ToastContainer position="top-right" autoClose={2000} theme="dark" />
-
         <DeliveryForm onSubmit={addDeliveryInfo} />
       </Container>
     </>

@@ -87,6 +87,8 @@ const DeliveryForm = ({ onSubmit }) => {
             name="dispatchCity"
             value={dispatchCity}
             onChange={handleChange}
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="This field may contain only letters, apostrophe, dash and spaces. For example Kyiv, New York City, Ivano-Frankivsk"
           />
         </Form.Group>
       </Row>
@@ -100,6 +102,8 @@ const DeliveryForm = ({ onSubmit }) => {
             name="destinationCity"
             value={destinationCity}
             onChange={handleChange}
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="This field may contain only letters, apostrophe, dash and spaces. For example Kyiv, New York City, Ivano-Frankivsk"
           />
         </Form.Group>
       </Row>
@@ -107,8 +111,6 @@ const DeliveryForm = ({ onSubmit }) => {
       <Form.Group className="mb-3">
         <Form.Label>Date of dispatch</Form.Label>
         <DatePicker
-          dateFormat="Pp"
-          name="startDate"
           value={startDate}
           selected={startDate}
           isClearable
@@ -116,6 +118,7 @@ const DeliveryForm = ({ onSubmit }) => {
           clearButtonClassName={s.clearButton}
           onChange={(date) => setStartDate(date)}
           minDate={new Date()}
+          dateFormat="dd/MM/yyyy"
         />
       </Form.Group>
 

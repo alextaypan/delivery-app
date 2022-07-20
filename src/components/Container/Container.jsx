@@ -16,7 +16,7 @@ const Container = ({ children, requests, onClick }) => {
           className={s.button}
           onClick={() => setModalShow(true)}
         >
-          Requests
+          My Requests
         </Button>
       </div>
       <ModalRequestsInfo
